@@ -1,0 +1,347 @@
+/* Auth Pages (Login and Register) */
+.auth-page {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.auth-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+/* Invertir el orden de las columnas para Register */
+.auth-container-register {
+    grid-template-columns: 1fr 1fr;
+    direction: rtl;
+    /* Invierte el orden de las columnas */
+}
+
+.auth-container-register>* {
+    direction: ltr;
+    /* Restaura el orden del contenido dentro de cada columna */
+}
+
+/* Estilos para el formulario (Login) */
+.auth-form-column {
+    background: linear-gradient(135deg, #f1d1d1, #c9cbce);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form-column h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: #56cf70;
+    /* Azul oscuro para el título en Login */
+}
+
+/* Estilos específicos para el formulario de Register */
+.auth-form-column-register {
+    background: linear-gradient(135deg, #f5f7fa, #dfe6e9);
+    /* Gradiente más claro para Register */
+}
+
+.auth-form-column-register h2 {
+    color: #6c5ce7;
+    /* Morado para el título en Register */
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #34495e;
+    /* Gris azulado para las etiquetas */
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #dfe6e9;
+    /* Borde gris claro */
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #f9fbfc;
+    /* Fondo claro */
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #2ecc71;
+    /* Verde al enfocar en Login */
+}
+
+/* Ajustar el color del borde al enfocar en Register */
+.auth-form-column-register .form-group input:focus {
+    border-color: #6c5ce7;
+    /* Morado al enfocar en Register */
+    box-shadow: 0 0 5px rgba(108, 92, 231, 0.3);
+}
+
+.submit-button {
+    width: 100%;
+    padding: 0.75rem;
+    background: linear-gradient(90deg, #2ecc71, #27ae60);
+    /* Gradiente verde para Login */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.1s ease, background 0.3s ease;
+}
+
+.submit-button:hover {
+    background: linear-gradient(90deg, #27ae60, #219653);
+    transform: scale(1.02);
+}
+
+/* Estilos específicos para el botón de Register */
+.submit-button-register {
+    background: linear-gradient(90deg, #6c5ce7, #a29bfe);
+    /* Gradiente morado para Register */
+}
+
+.submit-button-register:hover {
+    background: linear-gradient(90deg, #5a4bc6, #8e7de3);
+}
+
+.auth-link {
+    text-align: center;
+    margin-top: 1rem;
+    color: #7f8c8d;
+    /* Gris para el texto */
+}
+
+.auth-link a {
+    color: #e67e22;
+    /* Naranja para el enlace en Login */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth-form-column-register+.auth-link a {
+    color: #00b894;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+    color: #d35400;
+}
+
+.auth-form-column-register+.auth-link a:hover {
+    color: #009875;
+}
+
+.auth-image-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+
+    .auth-container,
+    .auth-container-register {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        direction: ltr;
+    }
+
+    .auth-page {
+        margin: 1rem auto;
+    }
+
+    .auth-form-column,
+    .auth-form-column-register {
+        padding: 1.5rem;
+    }
+
+    .auth-form-column h2,
+    .auth-form-column-register h2 {
+        font-size: 1.5rem;
+    }
+
+    .form-group input {
+        font-size: 0.9rem;
+        padding: 0.6rem;
+    }
+
+    .submit-button,
+    .submit-button-register {
+        font-size: 0.9rem;
+    }
+
+    .auth-image {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-page {
+        margin: 0.5rem auto;
+    }
+
+    .auth-form-column,
+    .auth-form-column-register {
+        padding: 1rem;
+    }
+
+    .auth-form-column h2,
+    .auth-form-column-register h2 {
+        font-size: 1.2rem;
+    }
+
+    .form-group input {
+        font-size: 0.8rem;
+        padding: 0.5rem;
+    }
+
+    .submit-button,
+    .submit-button-register {
+        font-size: 0.8rem;
+        padding: 0.6rem;
+    }
+
+    .auth-link {
+        font-size: 0.9rem;
+    }
+
+    .auth-image {
+        max-width: 250px;
+    }
+}
+
+.home-icon {
+    position: absolute;
+    top: 0.5rem;
+    left: 1rem;
+    color: #2c3e50;
+    font-size: 2rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.home-icon:hover {
+    color: #2ecc71;
+    transform: scale(1.1);
+}
+
+.auth-container-register .home-icon:hover {
+    color: #6c5ce7;
+}
+
+.auth-page {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .home-icon {
+        top: 0.5rem;
+        left: 0.5rem;
+        font-size: 1.5rem;
+    }
+
+    .auth-page {
+        margin: 1rem auto;
+    }
+
+    .auth-container,
+    .auth-container-register {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        direction: ltr;
+    }
+
+    .auth-form-column,
+    .auth-form-column-register {
+        padding: 1.5rem;
+    }
+
+    .auth-form-column h2,
+    .auth-form-column-register h2 {
+        font-size: 1.5rem;
+    }
+
+    .form-group input {
+        font-size: 0.9rem;
+        padding: 0.6rem;
+    }
+
+    .submit-button,
+    .submit-button-register {
+        font-size: 0.9rem;
+    }
+
+    .auth-image {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-icon {
+        top: 0.3rem;
+        left: 0.3rem;
+        font-size: 1.2rem;
+    }
+
+    .auth-page {
+        margin: 0.5rem auto;
+    }
+
+    .auth-form-column,
+    .auth-form-column-register {
+        padding: 1rem;
+    }
+
+    .auth-form-column h2,
+    .auth-form-column-register h2 {
+        font-size: 1.2rem;
+    }
+
+    .form-group input {
+        font-size: 0.8rem;
+        padding: 0.5rem;
+    }
+
+    .submit-button,
+    .submit-button-register {
+        font-size: 0.8rem;
+        padding: 0.6rem;
+    }
+
+    .auth-link {
+        font-size: 0.9rem;
+    }
+
+    .auth-image {
+        max-width: 250px;
+    }
+}

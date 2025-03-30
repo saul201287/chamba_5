@@ -1,0 +1,133 @@
+.carousel-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.custom-carousel {
+    position: relative;
+}
+
+.carousel-img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Ajustar los captions (mensajes) */
+.custom-carousel .legend {
+    background: rgba(0, 0, 0, 0.7) !important;
+    color: white !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 4px !important;
+    font-size: 1rem !important;
+    position: absolute !important;
+    bottom: 40px !important;
+    /* Más espacio para los indicadores */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    margin: 0 !important;
+    width: auto !important;
+    max-width: 80% !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+/* Ajustar los controles del carrusel (flechas) */
+.custom-carousel .control-arrow {
+    background: rgba(0, 0, 0, 0.5) !important;
+    border-radius: 50% !important;
+    width: 40px !important;
+    height: 40px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    opacity: 0.8 !important;
+    transition: opacity 0.3s ease !important;
+}
+
+.custom-carousel .control-arrow:hover {
+    opacity: 1 !important;
+}
+
+.custom-carousel .control-prev.control-arrow {
+    left: 10px !important;
+}
+
+.custom-carousel .control-next.control-arrow {
+    right: 10px !important;
+}
+
+/* Ajustar los indicadores (puntos) */
+.custom-carousel .carousel-indicators {
+    bottom: 10px !important;
+    margin: 0 !important;
+}
+
+.custom-carousel .carousel-indicators li {
+    background-color: #fff !important;
+    opacity: 0.5 !important;
+    width: 10px !important;
+    height: 10px !important;
+    border-radius: 50% !important;
+    margin: 0 5px !important;
+}
+
+.custom-carousel .carousel-indicators .active {
+    opacity: 1 !important;
+    background-color: #2ecc71 !important;
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
+    .carousel-wrapper {
+        max-width: 100%;
+    }
+
+    .carousel-img {
+        max-height: 300px;
+    }
+
+    .custom-carousel .legend {
+        font-size: 0.9rem !important;
+        padding: 0.4rem 0.8rem !important;
+        bottom: 30px !important;
+    }
+
+    .custom-carousel .control-arrow {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+    .custom-carousel .carousel-indicators {
+        bottom: 5px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-img {
+        max-height: 200px;
+    }
+
+    .custom-carousel .legend {
+        font-size: 0.8rem !important;
+        padding: 0.3rem 0.6rem !important;
+        bottom: 25px !important;
+        max-width: 90% !important;
+    }
+
+    .custom-carousel .control-arrow {
+        width: 25px !important;
+        height: 20px !important;
+        margin-bottom: 22px !important;
+    }
+
+    .custom-carousel .carousel-indicators li {
+        width: 8px !important;
+        height: 8px !important;
+        margin: 0 3px !important;
+    }
+
+}

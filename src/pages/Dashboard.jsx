@@ -10,6 +10,7 @@ import {
   FaBars,
 } from "react-icons/fa";
 import { io } from "socket.io-client";
+import Swal from "sweetalert2";
 
 import Overview from "../components/Overview";
 import Tables from "../components/Tables";
@@ -17,40 +18,70 @@ import Sensors from "../components/Sensors";
 import Controls from "../components/Controls";
 import "../styles/Dashboard.css";
 
+const socket = io("http://3.228.69.138:8090"); 
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState("overview");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [name] = useState("");
-  const [email] = useState("");
-
+  const [user, setUser] = useState({ name: "", email: "", role: "" });
+const apiUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
-    const newSocket = io("http://3.228.69.138:8090");
+    const userId = localStorage.getItem("id_user");
+    const token = localStorage.getItem("token");
 
-    newSocket.on("connect", () => {
-      console.log("✅ Conectado a Socket.IO");
+    if (userId) {
+      fetch(`${apiUrl}/user/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Error al obtener el perfil");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          
+          setUser(data);
+        })
+        .catch((error) => {
+          console.error("Error obteniendo el perfil:", error);
+        });
+    }
 
-      newSocket.emit("subscribe_alerta");
-      newSocket.emit("subscribe_control");
-    });
-
-    newSocket.on("subscribed", (msg) => {
-      console.log("🟢 Subscrito:", msg);
-    });
-
-    newSocket.on("disconnect", () => {
-      console.warn("🔌 Desconectado de Socket.IO");
-    });
-
-    newSocket.on("error", (err) => {
-      console.error("❌ Error de socket:", err);
+    socket.on("update", (message) => {
+      console.log("Mensaje recibido desde el servidor:", message);
     });
 
     return () => {
-      newSocket.disconnect();
+      socket.off("update");
     };
   }, []);
+
+  const handleLogout = () => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Se cerrará tu sesión y deberás iniciar sesión nuevamente.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, cerrar sesión",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("id_user");
+        navigate("/");
+      }
+    });
+  };
 
   return (
     <div className="dashboard-container">
@@ -105,15 +136,9 @@ const Dashboard = () => {
             </a>
           </li>
           <li className="nav-item-bottom">
-            <Link
-              className="nav-item"
-              onClick={() => {
-                localStorage.removeItem("token");
-                localStorage.removeItem("id_user");
-                navigate("/");
-              }}>
+            <a className="nav-item" onClick={handleLogout}>
               <FaSignOutAlt /> Cerrar Sesión
-            </Link>
+            </a>
           </li>
           <li className="nav-item-bottom">
             <a
@@ -134,8 +159,6 @@ const Dashboard = () => {
         {activeSection === "tables" && <Tables />}
         {activeSection === "sensors" && <Sensors />}
         {activeSection === "controls" && <Controls />}
-
-      
       </main>
 
       {isModalOpen && (
@@ -144,13 +167,13 @@ const Dashboard = () => {
             <h3>Perfil del Usuario</h3>
             <div className="modal-content">
               <p>
-                <strong>Nombre:</strong> {name}
+                <strong>Nombre:</strong> {user.data.name}
               </p>
               <p>
-                <strong>Correo:</strong> {email}
+                <strong>Correo:</strong> {user.data.email}
               </p>
               <p>
-                <strong>Rol:</strong> Administrador
+                <strong>Rol:</strong> Abministrador
               </p>
             </div>
             <button

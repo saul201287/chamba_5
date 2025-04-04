@@ -1,11 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaTable } from "react-icons/fa";
+import Swal from "sweetalert2"; 
+import "sweetalert2/dist/sweetalert2.min.css";
 
 const Tables = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const [formData, setFormData] = useState({
     minute: "30",
     hour: "1",
   });
+
+  const fetchData = () => {
+    fetch(`${apiUrl}/horario/`)
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.success) {
+          setData(json.data);
+        } else {
+          console.error("Error al obtener datos:", json.message);
+        }
+      })
+      .catch((error) => console.error("Error en fetch:", error))
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,56 +39,78 @@ const Tables = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("📤 Enviando JSON:", formData);
 
-    // Aquí podrías hacer un fetch:
-    // fetch('/api/ruta', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(formData),
-    // });
+    try {
+      const response = await fetch(`${apiUrl}/horario/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        Swal.fire({
+          title: "¡Guardado!",
+          text: "La configuración se guardó correctamente.",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+
+        fetchData();
+      } else {
+        throw new Error(result.message || "Error al guardar");
+      }
+    } catch (error) {
+      console.error("Error al enviar:", error);
+
+      Swal.fire({
+        title: "Error",
+        text: "Hubo un problema al guardar la configuración.",
+        icon: "error",
+        confirmButtonText: "Cerrar",
+      });
+    }
   };
 
   return (
     <section id="tables" className="section">
       <h2>
-        <FaTable /> Datos Históricos
+        <FaTable /> Horarios Registrados
       </h2>
 
-      <table className="data-table">
-        <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Peso (kg)</th>
-            <th>Pollos</th>
-            <th>Estado</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>30/03/2025</td>
-            <td>5.2</td>
-            <td>12</td>
-            <td>Activo</td>
-          </tr>
-          <tr>
-            <td>29/03/2025</td>
-            <td>5.0</td>
-            <td>11</td>
-            <td>Activo</td>
-          </tr>
-          <tr>
-            <td>28/03/2025</td>
-            <td>4.8</td>
-            <td>10</td>
-            <td>Pausado</td>
-          </tr>
-        </tbody>
-      </table>
+      {loading ? (
+        <p>Cargando datos...</p>
+      ) : (
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Hora</th>
+              <th>Minuto</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.length > 0 ? (
+              data.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>{item.hour}</td>
+                  <td>{item.minute}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="3">No hay datos disponibles</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      )}
 
-      {/* Formulario para JSON */}
       <div className="form-container">
         <h3>Configurar Intervalo</h3>
         <form onSubmit={handleSubmit} className="config-form">

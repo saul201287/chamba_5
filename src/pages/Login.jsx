@@ -20,8 +20,6 @@ const Login = () => {
   // Función para decodificar el token JWT
   const decodeJwt = (token) => {
     try {
-      // El token JWT tiene tres partes separadas por puntos
-      // La segunda parte es el payload codificado en base64
       const base64Url = token.split(".")[1];
       const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
       const jsonPayload = decodeURIComponent(

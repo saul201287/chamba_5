@@ -1,6 +1,5 @@
 import React from "react";
-import githubIcon from "../icons/github.png";
-import email from "../icons/email_15579150.gif";
+import { FaGithub, FaEnvelope } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -10,29 +9,29 @@ const Footer = () => {
           <div className="github-links">
             <h3>GitHub</h3>
             <a
-              href="https://github.com/saul201287"
+              href="https://github.com/ChrisOzuna10"
               target="_blank"
               rel="noopener noreferrer">
-              <p>ExampleCuenta</p>
-              <img src={githubIcon} alt="GitHub Saul" className="icon" />
+              <p>ChrisOzuna10</p>
+              <FaGithub className="icon" />
             </a>
             <a
-              href="https://github.com/saul201287"
+              href="https://github.com/lyzsolar"
               target="_blank"
               rel="noopener noreferrer">
-              <p>ExampleCuenta</p>
-              <img src={githubIcon} alt="GitHub Saul" className="icon" />
+              <p>lyzsolar</p>
+              <FaGithub className="icon" />
             </a>
           </div>
           <div className="email-links">
-            <h3>Contacto</h3>
-            <a href="mailto:example@example.com">
-              <p>ExampleCuenta</p>
-              <img src={email} alt="Email" className="icon" />
+            <h3>Correos</h3>
+            <a href="mailto:233384@ids.upchiapas.edu.mx">
+              <p>233384@ids.upchiapas.edu.mx</p>
+              <FaEnvelope className="icon" />
             </a>
-            <a href="mailto:example@example.com">
-              <p>ExampleCuenta</p>
-              <img src={email} alt="Email" className="icon" />
+            <a href="mailto:233432@ids.upchiapas.edu.mx">
+              <p>233432@ids.upchiapas.edu.mx</p>
+              <FaEnvelope className="icon" />
             </a>
           </div>
         </div>

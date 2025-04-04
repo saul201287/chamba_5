@@ -1,0 +1,42 @@
+.carousel-container {
+    max-width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.carousel-slide {
+    text-align: center;
+}
+
+.carousel-image {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.carousel-caption {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #555;
+    text-align: center;
+    padding: 0 10px;
+}
+
+@media (max-width: 768px) {
+    .carousel-image {
+        height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-image {
+        height: 250px;
+    }
+
+    .carousel-caption {
+        font-size: 14px;
+    }
+}

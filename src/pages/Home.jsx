@@ -33,7 +33,7 @@ const Home = () => {
       <Header />
       <main>
         <section className="features">
-          <h2 style={{marginTop:"2rem"}}>Funcionamiento General</h2>
+          <h2 style={{ marginTop: "2rem" }}>Funcionamiento General</h2>
           <div className="feature-grid">
             {features.map((feature, index) => (
               <FeatureCard

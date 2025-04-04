@@ -1,4 +1,3 @@
-/* Auth Pages (Login and Register) */
 .auth-page {
     max-width: 1200px;
     margin: 2rem auto;
@@ -12,19 +11,15 @@
     align-items: center;
 }
 
-/* Invertir el orden de las columnas para Register */
 .auth-container-register {
     grid-template-columns: 1fr 1fr;
     direction: rtl;
-    /* Invierte el orden de las columnas */
 }
 
 .auth-container-register>* {
     direction: ltr;
-    /* Restaura el orden del contenido dentro de cada columna */
 }
 
-/* Estilos para el formulario (Login) */
 .auth-form-column {
     background: linear-gradient(135deg, #f1d1d1, #c9cbce);
     padding: 2rem;
@@ -37,18 +32,14 @@
     margin-bottom: 2rem;
     font-size: 2rem;
     color: #56cf70;
-    /* Azul oscuro para el título en Login */
 }
 
-/* Estilos específicos para el formulario de Register */
 .auth-form-column-register {
     background: linear-gradient(135deg, #f5f7fa, #dfe6e9);
-    /* Gradiente más claro para Register */
 }
 
 .auth-form-column-register h2 {
     color: #6c5ce7;
-    /* Morado para el título en Register */
 }
 
 .auth-form {
@@ -66,7 +57,6 @@
     margin-bottom: 0.5rem;
     font-weight: bold;
     color: #34495e;
-    /* Gris azulado para las etiquetas */
 }
 
 .form-group input {
@@ -84,13 +74,10 @@
 .form-group input:focus {
     outline: none;
     border-color: #2ecc71;
-    /* Verde al enfocar en Login */
 }
 
-/* Ajustar el color del borde al enfocar en Register */
 .auth-form-column-register .form-group input:focus {
     border-color: #6c5ce7;
-    /* Morado al enfocar en Register */
     box-shadow: 0 0 5px rgba(108, 92, 231, 0.3);
 }
 
@@ -98,7 +85,6 @@
     width: 100%;
     padding: 0.75rem;
     background: linear-gradient(90deg, #2ecc71, #27ae60);
-    /* Gradiente verde para Login */
     color: white;
     border: none;
     border-radius: 8px;
@@ -113,10 +99,8 @@
     transform: scale(1.02);
 }
 
-/* Estilos específicos para el botón de Register */
 .submit-button-register {
     background: linear-gradient(90deg, #6c5ce7, #a29bfe);
-    /* Gradiente morado para Register */
 }
 
 .submit-button-register:hover {
@@ -127,12 +111,10 @@
     text-align: center;
     margin-top: 1rem;
     color: #7f8c8d;
-    /* Gris para el texto */
 }
 
 .auth-link a {
     color: #e67e22;
-    /* Naranja para el enlace en Login */
     text-decoration: none;
     font-weight: bold;
 }
@@ -239,11 +221,12 @@
 
 .home-icon {
     position: absolute;
-    top: 0.5rem;
-    left: 1rem;
+    top: 1.5rem;
+    left: 1.5rem;
     color: #2c3e50;
     font-size: 2rem;
     transition: color 0.3s ease, transform 0.3s ease;
+    z-index: 100;
 }
 
 .home-icon:hover {
@@ -308,7 +291,7 @@
 @media (max-width: 480px) {
     .home-icon {
         top: 0.3rem;
-        left: 0.3rem;
+        left: 1.3rem;
         font-size: 1.2rem;
     }
 
@@ -344,4 +327,43 @@
     .auth-image {
         max-width: 250px;
     }
+}
+
+.error-message {
+    color: #e74c3c;
+    background-color: #f9e1e1;
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.password-group {
+    position: relative;
+}
+
+.password-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-input-wrapper input {
+    width: 100%;
+    padding-right: 40px;
+}
+
+.password-toggle-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #7f8c8d;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.password-toggle-icon:hover {
+    color: #2c3e50;
 }

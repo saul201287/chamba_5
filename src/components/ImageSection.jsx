@@ -1,52 +1,52 @@
-import React from "react";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; 
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import "../styles/ImageSection.css"
 import img1 from "../assets/fotor-ai-2025032722145.jpg";
 import img2 from "../assets/fotor-ai-2025032722210.jpg";
 import img3 from "../assets/pp.webp";
 
-const items = [
+const images = [
   {
     src: img1,
-    altText: "Sistema automatizado",
+    alt: "Sistema automatizado",
     caption: "Sistema de dispensación inteligente",
   },
   {
     src: img2,
-    altText: "Pollos siendo alimentados",
+    alt: "Pollos siendo alimentados",
     caption: "Alimentación eficiente y económica",
   },
   {
     src: img3,
-    altText: "Pollos felices",
+    alt: "Pollos felices",
     caption: "Cuidado óptimo para tus pollos",
   },
 ];
 
-const ImageSection = () => {
+const ImageCarousel = () => {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+  };
+
   return (
-    <section className="image-section">
-      <h2>Nuestro Sistema en Acción</h2>
-      <div className="carousel-wrapper">
-        <Carousel
-          showArrows={true}
-          showThumbs={false}
-          showStatus={false}
-          infiniteLoop
-          autoPlay
-          interval={5000}
-          className="custom-carousel">
-          {items.map((item, index) => (
-            <div key={index}>
-              <img src={item.src} alt={item.altText} className="carousel-img" />
-              <p className="legend">{item.caption}</p>
-            </div>
-          ))}
-        </Carousel>
-      </div>
-    </section>
+    <div className="carousel-container">
+      <Slider {...settings}>
+        {images.map((img, index) => (
+          <div key={index} className="carousel-slide">
+            <img src={img.src} alt={img.alt} className="carousel-image" />
+            <p className="carousel-caption">{img.caption}</p>
+          </div>
+        ))}
+      </Slider>
+    </div>
   );
 };
 
-export default ImageSection;
+export default ImageCarousel;

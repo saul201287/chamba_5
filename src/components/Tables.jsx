@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { FaTable } from "react-icons/fa";
-import Swal from "sweetalert2"; 
+import { FaTable, FaTrash, FaPlus } from "react-icons/fa"; 
+import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
 const Tables = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [formData, setFormData] = useState({
     minute: "30",
@@ -59,14 +60,14 @@ const Tables = () => {
           icon: "success",
           confirmButtonText: "OK",
         });
-
         fetchData();
+        setIsModalOpen(false); 
+        setFormData({ minute: "30", hour: "1" }); 
       } else {
         throw new Error(result.message || "Error al guardar");
       }
     } catch (error) {
       console.error("Error al enviar:", error);
-
       Swal.fire({
         title: "Error",
         text: "Hubo un problema al guardar la configuración.",
@@ -76,11 +77,63 @@ const Tables = () => {
     }
   };
 
+  const handleDelete = async (id) => {
+    const result = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¡No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "No, cancelar",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const response = await fetch(`${apiUrl}/horario/${id}`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          Swal.fire({
+            title: "¡Eliminado!",
+            text: "El horario ha sido eliminado correctamente.",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+          fetchData();
+        } else {
+          throw new Error(result.message || "Error al eliminar");
+        }
+      } catch (error) {
+        console.error("Error al eliminar:", error);
+        Swal.fire({
+          title: "Error",
+          text: "Hubo un problema al eliminar el horario.",
+          icon: "error",
+          confirmButtonText: "Cerrar",
+        });
+      }
+    } else {
+      console.log("Eliminación cancelada por el usuario");
+    }
+  };
+
   return (
     <section id="tables" className="section">
       <h2>
         <FaTable /> Horarios Registrados
       </h2>
+
+      <div className="table-header">
+        <button className="add-button" onClick={() => setIsModalOpen(true)}>
+          <FaPlus /> Agregar Horario
+        </button>
+      </div>
 
       {loading ? (
         <p>Cargando datos...</p>
@@ -91,56 +144,76 @@ const Tables = () => {
               <th>ID</th>
               <th>Hora</th>
               <th>Minuto</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {data.length > 0 ? (
+            {data && data.length > 0 ? (
               data.map((item) => (
                 <tr key={item.id}>
                   <td>{item.id}</td>
                   <td>{item.hour}</td>
                   <td>{item.minute}</td>
+                  <td>
+                    <button
+                      className="delete-button"
+                      onClick={() => handleDelete(item.id)}
+                      title="Eliminar">
+                      <FaTrash />
+                    </button>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="3">No hay datos disponibles</td>
+                <td colSpan="4">No hay datos disponibles</td>
               </tr>
             )}
           </tbody>
         </table>
       )}
-
-      <div className="form-container">
-        <h3>Configurar Intervalo</h3>
-        <form onSubmit={handleSubmit} className="config-form">
-          <label>
-            Minuto:
-            <input
-              type="number"
-              name="minute"
-              value={formData.minute}
-              onChange={handleChange}
-              min="0"
-              max="59"
-              required
-            />
-          </label>
-          <label>
-            Hora:
-            <input
-              type="number"
-              name="hour"
-              value={formData.hour}
-              onChange={handleChange}
-              min="0"
-              max="23"
-              required
-            />
-          </label>
-          <button type="submit">Guardar Configuración</button>
-        </form>
-      </div>
+      {isModalOpen && (
+        <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <h3>Configurar Intervalo</h3>
+            <form onSubmit={handleSubmit} className="config-form">
+              <label>
+                Minuto:
+                <input
+                  type="number"
+                  name="minute"
+                  value={formData.minute}
+                  onChange={handleChange}
+                  min="0"
+                  max="59"
+                  required
+                />
+              </label>
+              <label>
+                Hora:
+                <input
+                  type="number"
+                  name="hour"
+                  value={formData.hour}
+                  onChange={handleChange}
+                  min="0"
+                  max="23"
+                  required
+                />
+              </label>
+              <div className="modal-buttons">
+                <button type="submit">Guardar Configuración</button>
+                <button
+                  type="button"
+                  className="cancel-button"
+                  onClick={() => setIsModalOpen(false)}>
+                  Cancelar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

@@ -17,8 +17,8 @@ import Tables from "../components/Tables";
 import Sensors from "../components/Sensors";
 import Controls from "../components/Controls";
 import "../styles/Dashboard.css";
-
-const socket = io("http://3.228.69.138:8090"); 
+const wsUrl = import.meta.env.VITE_WS_URL;
+const socket = io(wsUrl);
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [user, setUser] = useState({ name: "", email: "", role: "" });
-const apiUrl = import.meta.env.VITE_API_URL;
+  const apiUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const userId = localStorage.getItem("id_user");
     const token = localStorage.getItem("token");
@@ -47,7 +47,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
         })
         .then((data) => {
           console.log(data);
-          
+
           setUser(data);
         })
         .catch((error) => {
@@ -155,10 +155,10 @@ const apiUrl = import.meta.env.VITE_API_URL;
       </nav>
 
       <main className={`main-content ${isSidebarOpen ? "open" : "closed"}`}>
-        {activeSection === "overview" && <Overview />}
+        {activeSection === "overview" && <Overview socket={socket} />}
         {activeSection === "tables" && <Tables />}
-        {activeSection === "sensors" && <Sensors />}
-        {activeSection === "controls" && <Controls />}
+        {activeSection === "sensors" && <Sensors socket={socket} />}
+        {activeSection === "controls" && <Controls socket={socket} />}
       </main>
 
       {isModalOpen && (
